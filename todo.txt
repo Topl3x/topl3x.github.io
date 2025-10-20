@@ -1,0 +1,27 @@
+high prio
+X formatting of data in sheet
+X code reusability -> no code duplication for image trials
+X randomized image pairs from image pool
+
+medium prio
+X progress bar
+- instruction text
+- keybinds
+
+low prio
+- slider vertical
+- ui changes
+
+
+data format
+gender  age t1  t2  t3  ... tn  comment
+male    20  73  23  44      98  lgtm :)
+
+[{"rt":6918,"stimulus":"text  ",
+"slider_start":50,
+"response":56,
+"trial_type":"html-slider-response",
+"trial_index":0,
+"plugin_version":"2.1.0",
+"time_elapsed":6922},
+{"rt":5368,"stimulus":"\n        <h2>Rate this image</h2>\n        <div>\n          <button id=\"ref-btn\" type=\"button\">Show reference</button>\n        </div>\n        <img id=\"image\" src=\"images/name01_eval.png\" width=\"300\" />\n        <p>Please compare to reference image.</p>\n        <div id=\"slider-value\" style=\"font-weight:bold;\">Value: 50</div>\n      ","slider_start":50,"response":62,"trial_type":"html-slider-response","trial_index":1,"plugin_version":"2.1.0","time_elapsed":12293}]

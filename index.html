@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Perceptual Study</title>
+  <script src="https://unpkg.com/jspsych@8.2.2"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-html-button-response@2.1.0"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-survey-html-form@2.1.0"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-html-slider-response@2.1.0"></script>
+  <link href="https://unpkg.com/jspsych@8.2.2/css/jspsych.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body></body>
+<script>
+  const sheetURL = 'https://script.google.com/macros/s/AKfycbx8mwFKl1WHv84QkM4LblyCeo4UOBasZub5rMwazom52bwJ1ydoXuT0Sa4XGC0jLNgvxw/exec';
+  const jsPsych = initJsPsych({
+    show_progress_bar: true,
+    on_finish: function () {
+      const data = jsPsych.data.get().json();
+      fetch(sheetURL, {
+        method: 'POST',
+        // mode: 'no-cors',
+        headers: {
+          'Content-Type': 'text/plain'
+        },
+        body: data
+      });
+      jsPsych.data.displayData(); // shows results at the end
+    }
+  });
+
+  const timeline = [];
+
+  // const preload = {
+  //   type: jsPsychPreload,
+  //   images: [
+  //     'test.png', 'ref.png'
+  //   ]
+  // };
+  // timeline.push(preload);
+
+  timeline.push({
+    type: jsPsychHtmlButtonResponse,
+    stimulus: `
+      <h2>Welcome!</h2>
+      <p>This study explores visual perception. It will take about 5 minutes.</p>
+      <p>By continuing, you consent to participate anonymously.</p>
+    `,
+    choices: ['I Agree']
+  });
+
+  timeline.push({
+    type: jsPsychSurveyHtmlForm,
+    html: `
+      <p>Gender:
+        <select name="gender" required>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="nonbinary">Non-binary</option>
+        </select>
+      </p>
+      <p>Age: <input name="age" type="number" required></p>
+    `,
+    button_label: 'Start'
+  });
+
+  const imagePairs = [
+    { evaluation: 'images/name0_eval.png', reference: 'images/name0_ref.png' },
+    { evaluation: 'images/name1_eval.png', reference: 'images/name1_ref.png' },
+  ];
+
+  function createImageTrial(evaluation, reference) {
+    return {
+      type: jsPsychHtmlSliderResponse,
+      stimulus: `
+        <h2>Rate this image</h2>
+        <div>
+          <button id="ref-btn" type="button">Show reference</button>
+        </div>
+        <img id="image" src="${evaluation}" width="300" />
+        <p>Please compare to reference image.</p>
+        <div id="slider-value" style="font-weight:bold;">Value: 50</div>
+      `,
+      labels: ['0', '20', '40', '60', '80', '100'],
+      min: 0,
+      max: 100,
+      start: 50,
+      step: 1,
+      slider_width: 500,
+      // require_movement: true,
+      button_label: 'Continue',
+
+      on_load: () => {
+        const img = document.getElementById('image'); // needs to be general
+        // img.src = 'test.png'
+
+        const btn = document.getElementById('ref-btn');
+        const submitBtn = document.querySelector('.jspsych-btn');
+
+        const slider = document.querySelector('input[type="range"]');
+        const valueDisplay = document.getElementById('slider-value');
+
+        // valueDisplay.textContent = `Value: ${slider.value}`;
+
+        let showingRef = false;
+        let seenRef = false;
+        let sliderMoved = false;
+
+        submitBtn.disabled = true;
+
+        function updateSubmitState() {
+          submitBtn.disabled = !(sliderMoved && seenRef);
+        }
+
+        btn.addEventListener('click', () => {
+          showingRef = !showingRef;
+          seenRef = true;
+
+          if (showingRef) {
+            img.src = reference;
+            btn.textContent = 'Show original';
+            slider.disabled = true;
+            valueDisplay.style.opacity = '0.5';
+          } else {
+            img.src = evaluation;
+            btn.textContent = 'Show reference';
+            slider.disabled = false;
+            valueDisplay.style.opacity = '1.0';
+          }
+          updateSubmitState();
+        });
+
+        slider.addEventListener('input', () => {
+          valueDisplay.textContent = `Value: ${slider.value}`;
+          sliderMoved = true;
+          updateSubmitState();
+        });
+
+        const tickRow = document.createElement('div');
+        tickRow.style.display = 'flex';
+        tickRow.style.justifyContent = 'space-between';
+        tickRow.style.textAlign = 'center';
+        tickRow.style.width = '500px';
+        tickRow.style.fontSize = '14px';
+        tickRow.style.marginTop = '4px';
+        tickRow.innerHTML = `
+          <span style="flex:1; text-align:center;">Bad</span>
+          <span style="flex:1; text-align:center;">Poor</span>
+          <span style="flex:1; text-align:center;">Fair</span>
+          <span style="flex:1; text-align:center;">Good</span>
+          <span style="flex:1; text-align:center;">Excellent</span>
+        `;
+
+        slider.before(tickRow);
+      }
+    }
+  }
+
+  const imageTrials = []
+  for (const pair of jsPsych.randomization.shuffle(imagePairs)) {
+    imageTrials.push(createImageTrial(pair.evaluation, pair.reference));
+  }
+  timeline.push(...imageTrials);
+
+  timeline.push({
+    type: jsPsychSurveyHtmlForm,
+    html: `
+      <h3>Additional Comments</h3>
+      <p>Please share any thoughts or feedback about the task:</p>
+      <textarea
+        name="comments"
+        rows="10"
+        cols="80"
+        placeholder="Type your comments here..."
+        style="width: 90%; height: 200px; font-size: 16px;"
+      ></textarea>
+    `,
+    button_label: 'Submit'
+  });
+
+  jsPsych.run(timeline);
+</script>
+
+</html>

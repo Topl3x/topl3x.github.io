@@ -5,12 +5,13 @@ X randomized image pairs from image pool
 
 medium prio
 X progress bar
+X keybinds
 - instruction text
-- keybinds
+- custom domain name
 
 low prio
-- slider vertical
 - ui changes
+- slider vertical
 
 
 data format

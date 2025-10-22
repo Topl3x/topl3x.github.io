@@ -11,6 +11,7 @@
 </head>
 
 <body></body>
+
 <script>
   const sheetURL = 'https://script.google.com/macros/s/AKfycbx8mwFKl1WHv84QkM4LblyCeo4UOBasZub5rMwazom52bwJ1ydoXuT0Sa4XGC0jLNgvxw/exec';
   const jsPsych = initJsPsych({
@@ -70,12 +71,13 @@
   ];
 
   function createImageTrial(evaluation, reference) {
+    let handleKey;
     return {
       type: jsPsychHtmlSliderResponse,
       stimulus: `
         <h2>Rate this image</h2>
         <div>
-          <button id="ref-btn" type="button">Show reference</button>
+          <button id="ref-btn" type="button">Show reference (SPACE)</button>
         </div>
         <img id="image" src="${evaluation}" width="300" />
         <p>Please compare to reference image.</p>
@@ -96,6 +98,14 @@
 
         const btn = document.getElementById('ref-btn');
         const submitBtn = document.querySelector('.jspsych-btn');
+        handleKey = (e) => {
+          if(e.code === 'Space') {
+            e.preventDefault();
+            btn.click();
+          }
+        };
+
+        document.addEventListener('keydown', handleKey);
 
         const slider = document.querySelector('input[type="range"]');
         const valueDisplay = document.getElementById('slider-value');
@@ -118,12 +128,12 @@
 
           if (showingRef) {
             img.src = reference;
-            btn.textContent = 'Show original';
+            btn.textContent = 'Show original (SPACE)';
             slider.disabled = true;
             valueDisplay.style.opacity = '0.5';
           } else {
             img.src = evaluation;
-            btn.textContent = 'Show reference';
+            btn.textContent = 'Show reference (SPACE)';
             slider.disabled = false;
             valueDisplay.style.opacity = '1.0';
           }
@@ -136,7 +146,7 @@
           updateSubmitState();
         });
 
-        const tickRow = document.createElement('div');
+        let tickRow = document.createElement('div');
         tickRow.style.display = 'flex';
         tickRow.style.justifyContent = 'space-between';
         tickRow.style.textAlign = 'center';
@@ -152,6 +162,9 @@
         `;
 
         slider.before(tickRow);
+      },
+      on_finish: () => {
+          document.removeEventListener('keydown', handleKey);
       }
     }
   }

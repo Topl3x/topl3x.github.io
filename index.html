@@ -17,6 +17,11 @@
   const jsPsych = initJsPsych({
     show_progress_bar: true,
     on_finish: function () {
+      document.body.innerHTML = `
+        <div style="max-width:700px;margin:40px auto;font-family:system-ui;text-align:center">
+          <h2>Saving your responses…</h2>
+          <p>Please don’t close this tab.</p>
+        </div>`;
       const data = jsPsych.data.get().json();
       fetch(sheetURL, {
         method: 'POST',
@@ -24,10 +29,23 @@
         headers: {
           'Content-Type': 'text/plain'
         },
-        body: data
+        body: data,
+        keepalive: true
+      }).finally(() => {
+        window.location.replace('thankyou.html');
       });
-      jsPsych.data.displayData(); // shows results at the end
+      // jsPsych.data.displayData();
     }
+  });
+
+  jsPsych.data.addProperties({
+    screen_width:  screen.width,
+    screen_height: screen.height,
+    window_width:  window.innerWidth,
+    window_height: window.innerHeight,
+    device_pixel_ratio: window.devicePixelRatio,
+    user_agent: navigator.userAgent,
+    device: /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent) ? 'mobile' : 'desktop'
   });
 
   const timeline = [];
@@ -44,7 +62,8 @@
     type: jsPsychHtmlButtonResponse,
     stimulus: `
       <h2>Welcome!</h2>
-      <p>This study explores visual perception. It will take about 5 minutes.</p>
+      <p>This study explores visual perception of rendered avatars. It will take about 5 minutes.</p>
+      <p>Your task is to rate each image on a scale of 0-100 by comparing a toggleable reference image.</p>
       <p>By continuing, you consent to participate anonymously.</p>
     `,
     choices: ['I Agree']
@@ -58,9 +77,10 @@
           <option value="male">Male</option>
           <option value="female">Female</option>
           <option value="nonbinary">Non-binary</option>
+          <option value="other">Other</option>
         </select>
       </p>
-      <p>Age: <input name="age" type="number" required></p>
+      <p>Age: <input name="age" type="number" min="0" max ="120" required></p>
     `,
     button_label: 'Start'
   });
@@ -109,8 +129,6 @@
 
         const slider = document.querySelector('input[type="range"]');
         const valueDisplay = document.getElementById('slider-value');
-
-        // valueDisplay.textContent = `Value: ${slider.value}`;
 
         let showingRef = false;
         let seenRef = false;
@@ -179,7 +197,7 @@
     type: jsPsychSurveyHtmlForm,
     html: `
       <h3>Additional Comments</h3>
-      <p>Please share any thoughts or feedback about the task:</p>
+      <p>Please share any thoughts or feedback about the experiment:</p>
       <textarea
         name="comments"
         rows="10"
@@ -192,6 +210,7 @@
   });
 
   jsPsych.run(timeline);
+
 </script>
 
 </html>

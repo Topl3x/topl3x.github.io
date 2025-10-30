@@ -7,6 +7,7 @@
   <script src="https://unpkg.com/@jspsych/plugin-html-button-response@2.1.0"></script>
   <script src="https://unpkg.com/@jspsych/plugin-survey-html-form@2.1.0"></script>
   <script src="https://unpkg.com/@jspsych/plugin-html-slider-response@2.1.0"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-preload@2.1.0"></script>
   <link href="https://unpkg.com/jspsych@8.2.2/css/jspsych.css" rel="stylesheet" type="text/css" />
 </head>
 
@@ -84,6 +85,16 @@
     `,
     button_label: 'Start'
   });
+
+  var preload = {
+    type: jsPsychPreload,
+    images: [
+              'images/name0_eval.png',
+              'images/name1_eval.png',
+              'images/name0_ref.png',
+              'images/name1_ref.png'
+            ]
+  }
 
   const imagePairs = [
     { evaluation: 'images/name0_eval.png', reference: 'images/name0_ref.png' },
@@ -191,7 +202,7 @@
   for (const pair of jsPsych.randomization.shuffle(imagePairs)) {
     imageTrials.push(createImageTrial(pair.evaluation, pair.reference));
   }
-  timeline.push(...imageTrials);
+  timeline.push(preload, ...imageTrials);
 
   timeline.push({
     type: jsPsychSurveyHtmlForm,

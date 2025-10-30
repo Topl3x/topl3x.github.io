@@ -202,8 +202,8 @@
   for (const pair of jsPsych.randomization.shuffle(imagePairs)) {
     imageTrials.push(createImageTrial(pair.evaluation, pair.reference));
   }
-  timeline.push(preload, ...imageTrials);
-
+  timeline.unshift(preload);
+  timeline.push(...imageTrials);
   timeline.push({
     type: jsPsychSurveyHtmlForm,
     html: `

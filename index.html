@@ -92,13 +92,16 @@
               'images/name0_eval.png',
               'images/name1_eval.png',
               'images/name0_ref.png',
-              'images/name1_ref.png'
+              'images/name1_ref.png',
+              'images/female-3-casual_eval.png',
+              'images/female-3-casual_ref.png'
             ]
   }
 
   const imagePairs = [
     { evaluation: 'images/name0_eval.png', reference: 'images/name0_ref.png' },
     { evaluation: 'images/name1_eval.png', reference: 'images/name1_ref.png' },
+    { evaluation: 'images/female-3-casual_eval.png', reference: 'images/female-3-casual_ref.png' }
   ];
 
   function createImageTrial(evaluation, reference) {
@@ -110,7 +113,7 @@
         <div>
           <button id="ref-btn" type="button">Show reference (SPACE)</button>
         </div>
-        <img id="image" src="${evaluation}" width="300" />
+        <img id="image" src="${evaluation}"/>
         <p>Please compare to reference image.</p>
         <div id="slider-value" style="font-weight:bold;">Value: 50</div>
       `,

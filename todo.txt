@@ -9,9 +9,11 @@ X keybinds
 X instruction text
 - custom domain name
 
-low prio
+?? prio
 - ui changes
 - slider vertical
+
+- adaptable image resolution?
 
 
 data format

@@ -51,14 +51,6 @@
 
   const timeline = [];
 
-  // const preload = {
-  //   type: jsPsychPreload,
-  //   images: [
-  //     'test.png', 'ref.png'
-  //   ]
-  // };
-  // timeline.push(preload);
-
   timeline.push({
     type: jsPsychHtmlButtonResponse,
     stimulus: `
@@ -89,19 +81,74 @@
   var preload = {
     type: jsPsychPreload,
     images: [
-              'images/name0_eval.png',
-              'images/name1_eval.png',
-              'images/name0_ref.png',
-              'images/name1_ref.png',
-              'images/female-3-casual_eval.png',
-              'images/female-3-casual_ref.png'
-            ]
+      'images/A_0_25_0.png',  
+      'images/A_0_50_1.png',  
+      'images/A_0_75_2.png',  
+      'images/A_0_100.png',   
+      'images/B_0_25_3.png',  
+      'images/B_0_50_4.png',  
+      'images/B_0_75_5.png',  
+      'images/B_0_100.png',   
+      'images/B_1_25_6.png',  
+      'images/B_1_50_7.png',  
+      'images/B_1_75_8.png',  
+      'images/B_2_25_9.png',  
+      'images/B_2_50_10.png', 
+      'images/B_2_75_11.png', 
+      'images/C_0_25_12.png', 
+      'images/C_0_50_13.png', 
+      'images/C_0_75_14.png',
+      'images/C_0_100.png',
+      'images/C_1_25_15.png',
+      'images/C_1_50_16.png',
+      'images/C_1_75_17.png',
+      'images/C_2_25_18.png',
+      'images/C_2_50_19.png',
+      'images/C_2_75_20.png',
+      'images/D_0_25_21.png',
+      'images/D_0_50_22.png',
+      'images/D_0_75_23.png',
+      'images/D_0_100.png',
+      'images/D_1_25_24.png',
+      'images/D_1_50_25.png',
+      'images/D_1_75_26.png',
+      'images/D_2_25_27.png',
+      'images/D_2_50_28.png',
+      'images/D_2_75_29.png'
+    ]
   }
 
   const imagePairs = [
-    { evaluation: 'images/name0_eval.png', reference: 'images/name0_ref.png' },
-    { evaluation: 'images/name1_eval.png', reference: 'images/name1_ref.png' },
-    { evaluation: 'images/female-3-casual_eval.png', reference: 'images/female-3-casual_ref.png' }
+    { evaluation: 'images/A_0_25_0.png',  reference: 'images/A_0_100.png' }, 
+    { evaluation: 'images/A_0_50_1.png',  reference: 'images/A_0_100.png' },
+    { evaluation: 'images/A_0_75_2.png',  reference: 'images/A_0_100.png' },
+    { evaluation: 'images/B_0_25_3.png',  reference: 'images/B_0_100.png' },
+    { evaluation: 'images/B_0_50_4.png',  reference: 'images/B_0_100.png' },
+    { evaluation: 'images/B_0_75_5.png',  reference: 'images/B_0_100.png' },
+    { evaluation: 'images/B_1_25_6.png',  reference: 'images/B_0_100.png' },
+    { evaluation: 'images/B_1_50_7.png',  reference: 'images/B_0_100.png' },
+    { evaluation: 'images/B_1_75_8.png',  reference: 'images/B_0_100.png' },
+    { evaluation: 'images/B_2_25_9.png',  reference: 'images/B_0_100.png' },
+    { evaluation: 'images/B_2_50_10.png', reference: 'images/B_0_100.png' },
+    { evaluation: 'images/B_2_75_11.png', reference: 'images/B_0_100.png' },
+    { evaluation: 'images/C_0_25_12.png', reference: 'images/C_0_100.png' },
+    { evaluation: 'images/C_0_50_13.png', reference: 'images/C_0_100.png' },
+    { evaluation: 'images/C_0_75_14.png', reference: 'images/C_0_100.png' },
+    { evaluation: 'images/C_1_25_15.png', reference: 'images/C_0_100.png' },
+    { evaluation: 'images/C_1_50_16.png', reference: 'images/C_0_100.png' },
+    { evaluation: 'images/C_1_75_17.png', reference: 'images/C_0_100.png' },
+    { evaluation: 'images/C_2_25_18.png', reference: 'images/C_0_100.png' },
+    { evaluation: 'images/C_2_50_19.png', reference: 'images/C_0_100.png' },
+    { evaluation: 'images/C_2_75_20.png', reference: 'images/C_0_100.png' },
+    { evaluation: 'images/D_0_25_21.png', reference: 'images/D_0_100.png' },
+    { evaluation: 'images/D_0_50_22.png', reference: 'images/D_0_100.png' },
+    { evaluation: 'images/D_0_75_23.png', reference: 'images/D_0_100.png' },
+    { evaluation: 'images/D_1_25_24.png', reference: 'images/D_0_100.png' },
+    { evaluation: 'images/D_1_50_25.png', reference: 'images/D_0_100.png' },
+    { evaluation: 'images/D_1_75_26.png', reference: 'images/D_0_100.png' },
+    { evaluation: 'images/D_2_25_27.png', reference: 'images/D_0_100.png' },
+    { evaluation: 'images/D_2_50_28.png', reference: 'images/D_0_100.png' },
+    { evaluation: 'images/D_2_75_29.png', reference: 'images/D_0_100.png' }
   ];
 
   function createImageTrial(evaluation, reference) {

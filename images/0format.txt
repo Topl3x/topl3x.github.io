@@ -1,0 +1,4 @@
+A/B/C/D		Scene
+0/1/2		All/Fore/Back
+25/50/100	Pruned
+0-19		Trial#

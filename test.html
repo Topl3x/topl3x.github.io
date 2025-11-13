@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Image + Right Column (Vertical Slider)</title>
+  <script src="https://unpkg.com/jspsych@8.2.2"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-html-slider-response@2.1.0"></script>
+  <link href="https://unpkg.com/jspsych@8.2.2/css/jspsych.css" rel="stylesheet" />
+  <style>
+    .trial-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 18px;
+      min-height: 100vh;
+      box-sizing: border-box;
+      padding: 12px;
+    }
+    .img-col img {
+      max-width: 42vw;
+      max-height: 70vh;
+      object-fit: contain;
+      display: block;
+    }
+    .right-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    /* Make jsPsych’s slider wrapper compact when moved */
+    .right-col .jspsych-html-slider-response-container,
+    .right-col .jspsych-html-slider-response-stimulus {
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+    /* Keep labels tight (optional) */
+    .right-col .jspsych-slider-labels {
+      margin: 4px 0 !important;
+      gap: 4px;
+    }
+  </style>
+</head>
+<body></body>
+
+<script>
+  const jsPsych = initJsPsych({
+    show_progress_bar: false,
+    on_finish: () => jsPsych.data.displayData()
+  });
+
+  const trial = {
+    type: jsPsychHtmlSliderResponse,
+    stimulus: `
+      <div class="trial-wrap">
+        <div class="img-col">
+          <img id="trial-image" src="images/A_0_25_0.png" alt="stimulus" />
+        </div>
+        <div class="right-col" id="right-col">
+          <button id="ref-btn" type="button">Show reference</button>
+          <!-- slider gets moved here -->
+          <div id="slider-value" style="font-weight:600;">Value: 50</div>
+          <!-- Continue button gets moved here too -->
+        </div>
+      </div>
+    `,
+    // labels: ['0','25','50','75','100'],
+    min: 0,
+    max: 100,
+    start: 50,
+    step: 1,
+    slider_width: 320,          // affects track length before rotation
+    button_label: 'Continue',
+
+    on_load: () => {
+      const rightCol = document.getElementById('right-col');
+      const slider = document.querySelector('input[type="range"]');
+      const sliderWrapper = slider.parentElement; // jsPsych’s container for slider+labels
+      const submitBtn = document.querySelector('.jspsych-btn');
+      const valueEl = document.getElementById('slider-value');
+
+      // 1) Move jsPsych’s slider container into the right column
+      rightCol.insertBefore(sliderWrapper, valueEl);
+
+      // 2) Rotate the slider vertically and size it
+      slider.style.transform = 'rotate(-90deg)';
+      slider.style.width = '260px';     // this is the vertical length now
+      slider.style.margin = '0';
+
+      // Tighten the wrapper/labels so the column stays compact
+      sliderWrapper.style.margin = '0';
+      sliderWrapper.style.padding = '0';
+      sliderWrapper.style.display = 'flex';
+      sliderWrapper.style.flexDirection = 'column';
+      sliderWrapper.style.alignItems = 'center';
+
+      // 3) Live value readout
+      valueEl.textContent = `Value: ${slider.value}`;
+      slider.addEventListener('input', () => {
+        valueEl.textContent = `Value: ${slider.value}`;
+      });
+
+      // 4) Move the Continue button into the right column, below the value
+      if (submitBtn) {
+        rightCol.appendChild(submitBtn);
+      }
+
+      // 5) Example top button behavior (swap to grayscale as a placeholder)
+      const refBtn = document.getElementById('ref-btn');
+      const img = document.getElementById('trial-image');
+      let on = false;
+      refBtn.addEventListener('click', () => {
+        on = !on;
+        img.style.filter = on ? 'grayscale(100%)' : 'none';
+        refBtn.textContent = on ? 'Show original' : 'Show reference';
+      });
+    }
+  };
+
+  jsPsych.run([trial]);
+</script>
+</html>

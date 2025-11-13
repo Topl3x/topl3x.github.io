@@ -154,9 +154,7 @@
       button_label: 'Continue',
 
       on_load: () => {
-        const img = document.getElementById('image'); // needs to be general
-        // img.src = 'test.png'
-
+        const img = document.getElementById('image');
         const btn = document.getElementById('ref-btn');
         const submitBtn = document.querySelector('.jspsych-btn');
         handleKey = (e) => {
@@ -188,13 +186,13 @@
           if (showingRef) {
             img.src = reference;
             btn.textContent = 'Show original (SPACE)';
-            slider.disabled = true;
-            valueDisplay.style.opacity = '0.5';
+            // slider.disabled = true;
+            // valueDisplay.style.opacity = '0.5';
           } else {
             img.src = evaluation;
             btn.textContent = 'Show reference (SPACE)';
-            slider.disabled = false;
-            valueDisplay.style.opacity = '1.0';
+            // slider.disabled = false;
+            // valueDisplay.style.opacity = '1.0';
           }
           updateSubmitState();
         });

@@ -9,6 +9,23 @@
   <script src="https://unpkg.com/@jspsych/plugin-html-slider-response@2.1.0"></script>
   <script src="https://unpkg.com/@jspsych/plugin-preload@2.1.0"></script>
   <link href="https://unpkg.com/jspsych@8.2.2/css/jspsych.css" rel="stylesheet" type="text/css" />
+  <style>
+    #jspsych-progressbar-container { 
+      margin: 4px 0 6px !important;
+    }
+
+    .jspsych-html-slider-response-stimulus { 
+      margin-top: 0 !important; 
+    }
+
+    .jspsych-html-slider-response-container { 
+      margin-top: 6px !important;
+    }
+
+    .jspsych-content > *:first-child { 
+      margin-top: 0 !important; 
+    }
+  </style>
 </head>
 
 <body></body>
@@ -136,26 +153,32 @@
     return {
       type: jsPsychHtmlSliderResponse,
       stimulus: `
-        <h2>Rate this image</h2>
-        <div>
-          <button id="ref-btn" type="button">Show reference (SPACE)</button>
+        <div style="display: flex; align-items: center; justify-content: center;">
+          <div>
+            <img id="image" src="${evaluation}" style="max-width: 90vw; max-height: 83vh; width: auto; height: auto; object-fit: contain;" />
+          </div>
+          <div id="right-panel" style="margin-left: auto;">
+            <p>Please compare to reference image.</p>
+            <button id="ref-btn" type="button">Show Reference<br>[SPACE]</button>
+            <div id="slider-container" style="display: flex;"></div>
+            <div id="slider-value" style="font-weight:bold;">Value: 50</div>
+            <div id="continue-button"></div>
+          </div>
         </div>
-        <img id="image" src="${evaluation}"/>
-        <p>Please compare to reference image.</p>
-        <div id="slider-value" style="font-weight:bold;">Value: 50</div>
       `,
-      labels: ['0', '20', '40', '60', '80', '100'],
+      // labels: ['0', '20', '40', '60', '80', '100'],
       min: 0,
       max: 100,
       start: 50,
       step: 1,
-      slider_width: 500,
+      // slider_width: 20,
       // require_movement: true,
       button_label: 'Continue',
 
       on_load: () => {
         const img = document.getElementById('image');
         const btn = document.getElementById('ref-btn');
+        btn.style.width = '115px';
         const submitBtn = document.querySelector('.jspsych-btn');
         handleKey = (e) => {
           if(e.code === 'Space') {
@@ -167,7 +190,88 @@
         document.addEventListener('keydown', handleKey);
 
         const slider = document.querySelector('input[type="range"]');
+        const sliderContainer = document.querySelector('#slider-container');
+        const continueContainer = document.querySelector('#continue-button');
         const valueDisplay = document.getElementById('slider-value');
+        const sliderWrapper = slider.parentElement;
+        const panel = document.getElementById('ref-btn').parentElement;
+
+        const sliderRow = document.createElement('div');
+        sliderRow.style.display = 'flex';
+        sliderRow.style.alignItems = 'center';
+        sliderRow.style.gap = '6px';
+        sliderRow.style.justifyContent = 'center';
+
+        panel.insertBefore(sliderRow, sliderContainer);
+        sliderRow.appendChild(sliderContainer);
+
+        sliderContainer.style.width = '0px';
+        sliderContainer.style.height = '500px';
+        sliderContainer.style.position = 'relative';
+        sliderContainer.style.display = 'inline-block';
+        sliderContainer.style.overflow = 'visible';
+        sliderContainer.style.margin = '20px';
+        sliderContainer.style.padding = '0';
+
+        const rotor = document.createElement('div');
+        rotor.style.position = 'absolute';
+        rotor.style.left = '50%';
+        rotor.style.top = '50%';
+        rotor.style.transform = 'translate(-50%, -50%) rotate(-90deg)';
+        rotor.style.transformOrigin = 'center center';
+        rotor.style.width = '500px';
+        rotor.style.height = '30px';
+        rotor.style.display = 'flex';
+        rotor.style.alignItems = 'center';
+        rotor.style.justifyContent = 'center';
+
+        sliderWrapper.style.margin = '0';
+        sliderWrapper.style.padding = '0';
+        sliderWrapper.style.display = 'flex';
+        sliderWrapper.style.alignItems = 'center';
+        sliderWrapper.style.justifyContent = 'center';
+        rotor.appendChild(sliderWrapper);
+        sliderContainer.appendChild(rotor);
+
+        slider.style.width = '500px';
+        slider.style.height = '30px';
+        slider.style.margin = '0';
+        slider.style.padding = '0';
+        slider.style.display = 'block';
+        slider.style.transform = 'none';
+
+        const tickCol = document.createElement('div');
+        tickCol.style.display = 'flex';
+        tickCol.style.flexDirection = 'column';
+        tickCol.style.justifyContent = 'space-between';
+        tickCol.style.height = '500px';
+        tickCol.style.marginLeft = '0px';
+        tickCol.style.fontSize = '13px';
+        tickCol.style.lineHeight = '1.1';
+        tickCol.style.userSelect = 'none';
+        tickCol.style.webkitUserSelect = 'none';
+        tickCol.style.MozUserSelect = 'none';
+        tickCol.style.msUserSelect = 'none';  
+        tickCol.style.alignItems = 'flex-start';
+        tickCol.style.textAlign = 'left';
+
+        tickCol.style.pointerEvents = 'none';
+        tickCol.innerHTML = `
+          <span>100</span>
+          <span>&nbsp;&nbsp;Excellent</span>
+          <span>80</span>
+          <span>&nbsp;&nbsp;Good</span>
+          <span>60</span>
+          <span>&nbsp;&nbsp;Fair</span>
+          <span>40</span>
+          <span>&nbsp;&nbsp;Poor</span>
+          <span>20</span>
+          <span>&nbsp;&nbsp;Bad</span>
+          <span>0</span>
+        `;
+        sliderRow.appendChild(tickCol);
+
+        continueContainer.append(document.querySelector('.jspsych-btn'));
 
         let showingRef = false;
         let seenRef = false;
@@ -179,18 +283,19 @@
           submitBtn.disabled = !(sliderMoved && seenRef);
         }
 
+        btn.style.whiteSpace = 'pre-line';
         btn.addEventListener('click', () => {
           showingRef = !showingRef;
           seenRef = true;
 
           if (showingRef) {
             img.src = reference;
-            btn.textContent = 'Show original (SPACE)';
+            btn.textContent = 'Show Original\n[SPACE]';
             // slider.disabled = true;
             // valueDisplay.style.opacity = '0.5';
           } else {
             img.src = evaluation;
-            btn.textContent = 'Show reference (SPACE)';
+            btn.textContent = 'Show Reference\n[SPACE]';
             // slider.disabled = false;
             // valueDisplay.style.opacity = '1.0';
           }
@@ -210,6 +315,7 @@
         tickRow.style.width = '500px';
         tickRow.style.fontSize = '14px';
         tickRow.style.marginTop = '4px';
+        tickRow.style.flexDirection = 'column';
         tickRow.innerHTML = `
           <span style="flex:1; text-align:center;">Bad</span>
           <span style="flex:1; text-align:center;">Poor</span>
@@ -218,7 +324,7 @@
           <span style="flex:1; text-align:center;">Excellent</span>
         `;
 
-        slider.before(tickRow);
+        // slider.before(tickRow);
       },
       on_finish: () => {
           document.removeEventListener('keydown', handleKey);

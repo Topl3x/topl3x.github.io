@@ -10,8 +10,8 @@ X instruction text
 - custom domain name
 
 ?? prio
-- ui changes
-- slider vertical
+X ui changes
+X slider vertical
 
 - adaptable image resolution?
 

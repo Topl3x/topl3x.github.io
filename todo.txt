@@ -1,3 +1,13 @@
+X Import new videos
+- Fix lag when switching
+- Fix sheet integration, again
+- Should be more obvious what video you are looking at
+- Switch video with tap/mouse click
+- Save after each trial?
+- 2 duplicate trials
+
+
+---OLD---
 high prio
 X formatting of data in sheet
 X code reusability -> no code duplication for image trials

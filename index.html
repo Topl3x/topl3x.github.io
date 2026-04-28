@@ -128,10 +128,29 @@
   var preload = {
     type: jsPsychPreload,
     video: [
-      'videos/ref.mp4',
-      'videos/test.mp4'
+      'videos/anim_female-3-casual_original_knees_poses.mp4',
+      'videos/anim_female-3-casual_original_shake_shoulders_poses.mp4',
+      'videos/anim_female-3-casual_original_walking_01_poses.mp4',
+      'videos/anim_female-3-casual_142897_0.500_knees_poses_0.mp4',
+      'videos/anim_female-3-casual_142897_0.500_shake_shoulders_poses_1.mp4',
+      'videos/anim_female-3-casual_142897_0.500_walking_01_poses_2.mp4',
+      'videos/anim_female-3-casual_85738_0.300_knees_poses_3.mp4',
+      'videos/anim_female-3-casual_85738_0.300_shake_shoulders_poses_4.mp4',
+      'videos/anim_female-3-casual_85738_0.300_walking_01_poses_5.mp4',
+      'videos/anim_male-3-casual_original_knees_poses.mp4',
+      'videos/anim_male-3-casual_original_shake_shoulders_poses.mp4',
+      'videos/anim_male-3-casual_original_walking_01_poses.mp4',
+      'videos/anim_male-3-casual_102903_0.500_knees_poses_6.mp4',
+      'videos/anim_male-3-casual_102903_0.500_shake_shoulders_poses_7.mp4',
+      'videos/anim_male-3-casual_102903_0.500_walking_01_poses_8.mp4',
+      'videos/anim_male-3-casual_61742_0.300_knees_poses_9.mp4',
+      'videos/anim_male-3-casual_61742_0.300_shake_shoulders_poses_10.mp4',
+      'videos/anim_male-3-casual_61742_0.300_walking_01_poses_11.mp4'
     ]
   };
+
+
+
 
   // const imagePairs = [
   //   { evaluation: 'images/A_0_25_0.png',  reference: 'images/A_0_100.png' },
@@ -157,7 +176,18 @@
   // ];
 
   const videoPairs = [
-    { evaluation: 'videos/test.mp4',  reference: 'videos/ref.mp4' }
+    { evaluation: 'videos/anim_female-3-casual_142897_0.500_knees_poses_0.mp4',           reference: 'videos/anim_female-3-casual_original_knees_poses.mp4' },
+    { evaluation: 'videos/anim_female-3-casual_142897_0.500_shake_shoulders_poses_1.mp4', reference: 'videos/anim_female-3-casual_original_shake_shoulders_poses.mp4' },
+    { evaluation: 'videos/anim_female-3-casual_142897_0.500_walking_01_poses_2.mp4',      reference: 'videos/anim_female-3-casual_original_walking_01_poses.mp4' },
+    { evaluation: 'videos/anim_female-3-casual_85738_0.300_knees_poses_3.mp4',            reference: 'videos/anim_female-3-casual_original_knees_poses.mp4' },
+    { evaluation: 'videos/anim_female-3-casual_85738_0.300_shake_shoulders_poses_4.mp4',  reference: 'videos/anim_female-3-casual_original_shake_shoulders_poses.mp4' },
+    { evaluation: 'videos/anim_female-3-casual_85738_0.300_walking_01_poses_5.mp4',       reference: 'videos/anim_female-3-casual_original_walking_01_poses.mp4' },
+    { evaluation: 'videos/anim_male-3-casual_102903_0.500_knees_poses_6.mp4',             reference: 'videos/anim_male-3-casual_original_knees_poses.mp4' },
+    { evaluation: 'videos/anim_male-3-casual_102903_0.500_shake_shoulders_poses_7.mp4',   reference: 'videos/anim_male-3-casual_original_shake_shoulders_poses.mp4' },
+    { evaluation: 'videos/anim_male-3-casual_102903_0.500_walking_01_poses_8.mp4',        reference: 'videos/anim_male-3-casual_original_walking_01_poses.mp4' },
+    { evaluation: 'videos/anim_male-3-casual_61742_0.300_knees_poses_9.mp4',              reference: 'videos/anim_male-3-casual_original_knees_poses.mp4' },
+    { evaluation: 'videos/anim_male-3-casual_61742_0.300_shake_shoulders_poses_10.mp4',   reference: 'videos/anim_male-3-casual_original_shake_shoulders_poses.mp4' },
+    { evaluation: 'videos/anim_male-3-casual_61742_0.300_walking_01_poses_11.mp4',        reference: 'videos/anim_male-3-casual_original_walking_01_poses.mp4' }
   ];
 
   function createVideoTrial(evaluation, reference) {

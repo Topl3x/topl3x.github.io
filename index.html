@@ -72,8 +72,9 @@
     type: jsPsychHtmlButtonResponse,
     stimulus: `
       <h2>Welcome!</h2>
-      <p>This study explores visual perception of avatars in motion. It will take about 5 minutes to complete.</p>
-      <p>Your task is to rate each video on a scale of 0-100 by comparing a toggleable reference video.</p>
+      <p>This study explores perceived visual fidelity of avatars in motion. The experiment will take about <strong>5-7 minutes</strong> to complete.</p>
+      <p>Your task is to rate the <strong>degraded video (left)</strong> by comparing it to its <strong>reference video (right)</strong> on a scale of <strong>0-100</strong>.</p>
+      <p>The same avatar and motion may appear in multiple trials. You may <strong>pause the animations using the spacebar</strong>, if needed.</p>
       <p>By continuing, you consent to participate anonymously.</p>
     `,
     choices: ['I Agree']
@@ -197,28 +198,36 @@
       stimulus: `
         <div style="display: flex; align-items: center; justify-content: center;">
           <div>
-            <video
-              id="evaluationVideo"
-              src="${evaluation}"
-              muted
-              playsinline
-              loop
-              preload="auto"
-              style="max-width: 80vw; max-height: 80vh; width: auto; height: auto; object-fit: contain; display: block;"
-            ></video>
-            <video
-              id="referenceVideo"
-              src="${reference}"
-              muted
-              playsinline
-              loop
-              preload="auto"
-              style="max-width: 80vw; max-height: 80vh; width: auto; height: auto; object-fit: contain; display: none;"
-            ></video>
+            <div style="display: flex; gap: 12px; align-items: center; justify-content: center;">
+              <div>
+                <video
+                  id="evaluationVideo"
+                  src="${evaluation}"
+                  muted
+                  playsinline
+                  loop
+                  preload="auto"
+                  style="max-width: 80vw; max-height: 80vh; width: auto; height: auto; object-fit: contain;"
+                ></video>
+                <p>Evaluation Video</p>
+              </div>
+              <div>
+                <video
+                  id="referenceVideo"
+                  src="${reference}"
+                  muted
+                  playsinline
+                  loop
+                  preload="auto"
+                  style="max-width: 80vw; max-height: 80vh; width: auto; height: auto; object-fit: contain;"
+                ></video>
+                <p>Reference Video</p>
+              </div>
+            </div>
           </div>
           <div id="right-panel" style="margin-left: auto;">
-            <p>Please compare to reference video.</p>
-            <button id="ref-btn" type="button">Reference Video<br>[SPACE]</button>
+            <p>Score percieved quality of evaluation versus reference. <br>You may pause using the spacebar.</p>
+            <button id="ref-btn" type="button">SYNC RESET</button>
             <div id="slider-container" style="display: flex;"></div>
             <div id="slider-value" style="font-weight:bold;">Value: 50</div>
             <div id="continue-button"></div>
@@ -240,26 +249,66 @@
 
         evaluationVideo.currentTime = 0;
         evaluationVideo.loop = true;
+        
+        referenceVideo.currentTime = 0;
+        referenceVideo.loop = true;
+        
         evaluationVideo.play().catch(err => {
           console.log('Video play failed:', err);
         });
-
-        referenceVideo.currentTime = 0;
-        referenceVideo.loop = true;
         referenceVideo.play().catch(err => {
           console.log('Reference video play failed:', err);
         });
 
+        let playing = true;
+
         const btn = document.getElementById('ref-btn');
         btn.style.width = '115px';
         const submitBtn = document.querySelector('.jspsych-btn');
+      
         handleKey = (e) => {
           if(e.code === 'Space') {
             e.preventDefault();
-            btn.click();
+            if(playing) {
+              evaluationVideo.pause();
+              referenceVideo.pause();
+            } else {
+              evaluationVideo.play();
+              referenceVideo.play();
+            }
+            playing = !playing;
+          }
+
+          if (e.code === 'ArrowUp') {
+            e.preventDefault();
+
+            const current = Number(slider.value);
+            const step = Number(slider.step) || 1;
+            const max = Number(slider.max);
+
+            slider.value = Math.min(current + step, max);
+            slider.dispatchEvent(new Event('input', { bubbles: true }));
+          }
+          
+          if (e.code === 'ArrowDown') {
+            e.preventDefault();
+
+            const current = Number(slider.value);
+            const step = Number(slider.step) || 1;
+            const min = Number(slider.min);
+
+            slider.value = Math.max(current - step, min);
+            slider.dispatchEvent(new Event('input', { bubbles: true }));
+          }
+
+          if(e.code === 'Enter') {
+            e.preventDefault();
+            if (!submitBtn.disabled) {
+              submitBtn.click();
+            }
           }
         };
-      
+
         document.addEventListener('keydown', handleKey);
 
         const slider = document.querySelector('input[type="range"]');
@@ -347,32 +396,26 @@
         continueContainer.append(document.querySelector('.jspsych-btn'));
 
         let showingRef = false;
-        let seenRef = false;
+        // let seenRef = false;
         let sliderMoved = false;
 
         submitBtn.disabled = true;
 
         function updateSubmitState() {
-          submitBtn.disabled = !(sliderMoved && seenRef);
+          submitBtn.disabled = !sliderMoved;
         }
 
         btn.style.whiteSpace = 'pre-line';
         btn.addEventListener('click', () => {
-          showingRef = !showingRef;
-          seenRef = true;
+          btn.blur();
+          evaluationVideo.pause();
+          referenceVideo.pause();
 
-          if (showingRef) {
-            referenceVideo.currentTime = evaluationVideo.currentTime;
-            evaluationVideo.style.display = 'none';
-            referenceVideo.style.display = 'block';
-            btn.textContent = 'Evaluation Video\n[SPACE]';
-          } else {
-            evaluationVideo.currentTime = referenceVideo.currentTime;
-            referenceVideo.style.display = 'none';
-            evaluationVideo.style.display = 'block';
-            btn.textContent = 'Reference Video\n[SPACE]';
-          }
-          updateSubmitState();
+          referenceVideo.currentTime = 0;
+          evaluationVideo.currentTime = 0;
+
+          evaluationVideo.play();
+          referenceVideo.play();
         });
 
         slider.addEventListener('input', () => {

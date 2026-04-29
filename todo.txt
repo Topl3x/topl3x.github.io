@@ -1,11 +1,10 @@
 X Import new videos
-- Fix lag when switching
-- Fix sheet integration, again
 - Should be more obvious what video you are looking at
-- Switch video with tap/mouse click
+- Fix sheet integration, again
 - Save after each trial?
 - 2 duplicate trials
-
+- increase/decrease slider with keyboard inputs
+- enter --> continue
 
 ---OLD---
 high prio

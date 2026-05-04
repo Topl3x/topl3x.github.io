@@ -76,9 +76,9 @@
     type: jsPsychHtmlButtonResponse,
     stimulus: `
       <h2>Welcome!</h2>
-      <p>This study explores perceived visual fidelity of avatars in motion. The experiment will take about <strong>5-7 minutes</strong> to complete.</p>
-      <p>Your task is to rate the <strong>degraded video (left)</strong> by comparing it to its <strong>reference video (right)</strong> on a scale of <strong>0-100</strong>.</p>
-      <p>The same avatar and motion may appear in multiple trials. You may <strong>pause the animations using the spacebar</strong>, if needed.</p>
+      <p>This study explores the graphical quality of avatars in motion. The experiment will take about <strong>5-7 minutes</strong> to complete.</p>
+      <p>Your task is to rate the <strong>degraded avatar (left)</strong> by comparing it to its <strong>reference avatar (right)</strong> on a scale of <strong>0-100</strong>.</p>
+      <p>The same avatar and motion may appear in multiple trials.</p>
       <p>By continuing, you consent to participate anonymously.</p>
     `,
     choices: ['I Agree']
@@ -153,14 +153,14 @@
                 ></video>
               </div>
               <div style="display: flex; width: 100%; margin-top: 8px;">
-                <div style="width: 50%; text-align: center;">Evaluation Video</div>
-                <div style="width: 50%; text-align: center;">Reference Video</div>
+                <div style="width: 50%; text-align: center;">Evaluation Avatar</div>
+                <div style="width: 50%; text-align: center;">Reference Avatar</div>
               </div>
             </div>
           </div>
        
           <div id="right-panel" style="margin-left: auto;">
-            <p>Score percieved quality of evaluation versus reference. <br>You may pause using the spacebar.</p>
+            <p>Compare the avatars and score the quality using the slider.</p>
             <div id="slider-container" style="display: flex;"></div>
             <div id="slider-value" style="font-weight:bold;">Value: 50</div>
             <div id="continue-button"></div>

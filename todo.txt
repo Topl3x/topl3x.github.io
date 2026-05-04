@@ -6,7 +6,7 @@ X stitch videos
 X Should be more obvious what video you are looking at
 X completion bar color
 X remove PAUSE and SYNC button(s)
-- Fix sheet integration, again
+X Fix sheet integration, again
 - rewrite welcome
 - first test trial
 - Save after each trial?

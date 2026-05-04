@@ -14,6 +14,10 @@
       margin: 4px 0 6px !important;
     }
 
+    #jspsych-progressbar-inner {
+      background-color: rgb(0, 196, 0) !important;
+    }
+
     .jspsych-html-slider-response-stimulus { 
       margin-top: 0 !important; 
     }
@@ -96,51 +100,15 @@
     button_label: 'Start'
   });
 
-  // var preload = {
-  //   type: jsPsychPreload,
-  //   images: [
-  //     'images/A_0_25_0.png',  
-  //     'images/A_0_50_1.png',
-  //     'images/A_0_100.png',   
-  //     'images/B_0_25_2.png',  
-  //     'images/B_0_50_3.png',
-  //     'images/B_0_100.png',   
-  //     'images/B_1_25_4.png',  
-  //     'images/B_1_50_5.png',  
-  //     'images/B_2_25_6.png',  
-  //     'images/B_2_50_7.png', 
-  //     'images/C_0_25_8.png', 
-  //     'images/C_0_50_9.png', 
-  //     'images/C_0_100.png',
-  //     'images/C_1_25_10.png',
-  //     'images/C_1_50_11.png',
-  //     'images/C_2_25_12.png',
-  //     'images/C_2_50_13.png',
-  //     'images/D_0_25_14.png',
-  //     'images/D_0_50_15.png',
-  //     'images/D_0_100.png',
-  //     'images/D_1_25_16.png',
-  //     'images/D_1_50_17.png',
-  //     'images/D_2_25_18.png',
-  //     'images/D_2_50_19.png'
-  //   ]
-  // }
-
   var preload = {
     type: jsPsychPreload,
     video: [
-      'videos/anim_female-3-casual_original_knees_poses.mp4',
-      'videos/anim_female-3-casual_original_shake_shoulders_poses.mp4',
-      'videos/anim_female-3-casual_original_walking_01_poses.mp4',
       'videos/anim_female-3-casual_142897_0.500_knees_poses_0.mp4',
       'videos/anim_female-3-casual_142897_0.500_shake_shoulders_poses_1.mp4',
       'videos/anim_female-3-casual_142897_0.500_walking_01_poses_2.mp4',
       'videos/anim_female-3-casual_85738_0.300_knees_poses_3.mp4',
       'videos/anim_female-3-casual_85738_0.300_shake_shoulders_poses_4.mp4',
       'videos/anim_female-3-casual_85738_0.300_walking_01_poses_5.mp4',
-      'videos/anim_male-3-casual_original_knees_poses.mp4',
-      'videos/anim_male-3-casual_original_shake_shoulders_poses.mp4',
-      'videos/anim_male-3-casual_original_walking_01_poses.mp4',
       'videos/anim_male-3-casual_102903_0.500_knees_poses_6.mp4',
       'videos/anim_male-3-casual_102903_0.500_shake_shoulders_poses_7.mp4',
       'videos/anim_male-3-casual_102903_0.500_walking_01_poses_8.mp4',
@@ -150,55 +118,29 @@
     ]
   };
 
-
-
-
-  // const imagePairs = [
-  //   { evaluation: 'images/A_0_25_0.png',  reference: 'images/A_0_100.png' },
-  //   { evaluation: 'images/A_0_50_1.png',  reference: 'images/A_0_100.png' },
-  //   { evaluation: 'images/B_0_25_2.png',  reference: 'images/B_0_100.png' },
-  //   { evaluation: 'images/B_0_50_3.png',  reference: 'images/B_0_100.png' },
-  //   { evaluation: 'images/B_1_25_4.png',  reference: 'images/B_0_100.png' },
-  //   { evaluation: 'images/B_1_50_5.png',  reference: 'images/B_0_100.png' },
-  //   { evaluation: 'images/B_2_25_6.png',  reference: 'images/B_0_100.png' },
-  //   { evaluation: 'images/B_2_50_7.png',  reference: 'images/B_0_100.png' },
-  //   { evaluation: 'images/C_0_25_8.png',  reference: 'images/C_0_100.png' },
-  //   { evaluation: 'images/C_0_50_9.png',  reference: 'images/C_0_100.png' },
-  //   { evaluation: 'images/C_1_25_10.png', reference: 'images/C_0_100.png' },
-  //   { evaluation: 'images/C_1_50_11.png', reference: 'images/C_0_100.png' },
-  //   { evaluation: 'images/C_2_25_12.png', reference: 'images/C_0_100.png' },
-  //   { evaluation: 'images/C_2_50_13.png', reference: 'images/C_0_100.png' },
-  //   { evaluation: 'images/D_0_25_14.png', reference: 'images/D_0_100.png' },
-  //   { evaluation: 'images/D_0_50_15.png', reference: 'images/D_0_100.png' },
-  //   { evaluation: 'images/D_1_25_16.png', reference: 'images/D_0_100.png' },
-  //   { evaluation: 'images/D_1_50_17.png', reference: 'images/D_0_100.png' },
-  //   { evaluation: 'images/D_2_25_18.png', reference: 'images/D_0_100.png' },
-  //   { evaluation: 'images/D_2_50_19.png', reference: 'images/D_0_100.png' }
-  // ];
-
-  const videoPairs = [
-    { evaluation: 'videos/anim_female-3-casual_142897_0.500_knees_poses_0.mp4',           reference: 'videos/anim_female-3-casual_original_knees_poses.mp4' },
-    { evaluation: 'videos/anim_female-3-casual_142897_0.500_shake_shoulders_poses_1.mp4', reference: 'videos/anim_female-3-casual_original_shake_shoulders_poses.mp4' },
-    { evaluation: 'videos/anim_female-3-casual_142897_0.500_walking_01_poses_2.mp4',      reference: 'videos/anim_female-3-casual_original_walking_01_poses.mp4' },
-    { evaluation: 'videos/anim_female-3-casual_85738_0.300_knees_poses_3.mp4',            reference: 'videos/anim_female-3-casual_original_knees_poses.mp4' },
-    { evaluation: 'videos/anim_female-3-casual_85738_0.300_shake_shoulders_poses_4.mp4',  reference: 'videos/anim_female-3-casual_original_shake_shoulders_poses.mp4' },
-    { evaluation: 'videos/anim_female-3-casual_85738_0.300_walking_01_poses_5.mp4',       reference: 'videos/anim_female-3-casual_original_walking_01_poses.mp4' },
-    { evaluation: 'videos/anim_male-3-casual_102903_0.500_knees_poses_6.mp4',             reference: 'videos/anim_male-3-casual_original_knees_poses.mp4' },
-    { evaluation: 'videos/anim_male-3-casual_102903_0.500_shake_shoulders_poses_7.mp4',   reference: 'videos/anim_male-3-casual_original_shake_shoulders_poses.mp4' },
-    { evaluation: 'videos/anim_male-3-casual_102903_0.500_walking_01_poses_8.mp4',        reference: 'videos/anim_male-3-casual_original_walking_01_poses.mp4' },
-    { evaluation: 'videos/anim_male-3-casual_61742_0.300_knees_poses_9.mp4',              reference: 'videos/anim_male-3-casual_original_knees_poses.mp4' },
-    { evaluation: 'videos/anim_male-3-casual_61742_0.300_shake_shoulders_poses_10.mp4',   reference: 'videos/anim_male-3-casual_original_shake_shoulders_poses.mp4' },
-    { evaluation: 'videos/anim_male-3-casual_61742_0.300_walking_01_poses_11.mp4',        reference: 'videos/anim_male-3-casual_original_walking_01_poses.mp4' }
+  const videos = [
+    'videos/anim_female-3-casual_142897_0.500_knees_poses_0.mp4',
+    // 'videos/anim_female-3-casual_142897_0.500_shake_shoulders_poses_1.mp4',
+    // 'videos/anim_female-3-casual_142897_0.500_walking_01_poses_2.mp4',
+    // 'videos/anim_female-3-casual_85738_0.300_knees_poses_3.mp4',
+    // 'videos/anim_female-3-casual_85738_0.300_shake_shoulders_poses_4.mp4',
+    // 'videos/anim_female-3-casual_85738_0.300_walking_01_poses_5.mp4',
+    // 'videos/anim_male-3-casual_102903_0.500_knees_poses_6.mp4',
+    // 'videos/anim_male-3-casual_102903_0.500_shake_shoulders_poses_7.mp4',
+    // 'videos/anim_male-3-casual_102903_0.500_walking_01_poses_8.mp4',
+    // 'videos/anim_male-3-casual_61742_0.300_knees_poses_9.mp4',
+    // 'videos/anim_male-3-casual_61742_0.300_shake_shoulders_poses_10.mp4',
+    // 'videos/anim_male-3-casual_61742_0.300_walking_01_poses_11.mp4'
   ];
 
-  function createVideoTrial(evaluation, reference) {
+  function createVideoTrial(evaluation) {
     let handleKey;
     return {
       type: jsPsychHtmlSliderResponse,
       stimulus: `
         <div style="display: flex; align-items: center; justify-content: center;">
-          <div>
-            <div style="display: flex; gap: 12px; align-items: center; justify-content: center;">
+          <div style="display: flex; gap: 12px; align-items: center; justify-content: center;">
+            <div>
               <div>
                 <video
                   id="evaluationVideo"
@@ -209,25 +151,16 @@
                   preload="auto"
                   style="max-width: 80vw; max-height: 80vh; width: auto; height: auto; object-fit: contain;"
                 ></video>
-                <p>Evaluation Video</p>
               </div>
-              <div>
-                <video
-                  id="referenceVideo"
-                  src="${reference}"
-                  muted
-                  playsinline
-                  loop
-                  preload="auto"
-                  style="max-width: 80vw; max-height: 80vh; width: auto; height: auto; object-fit: contain;"
-                ></video>
-                <p>Reference Video</p>
+              <div style="display: flex; width: 100%; margin-top: 8px;">
+                <div style="width: 50%; text-align: center;">Evaluation Video</div>
+                <div style="width: 50%; text-align: center;">Reference Video</div>
               </div>
             </div>
           </div>
+       
           <div id="right-panel" style="margin-left: auto;">
             <p>Score percieved quality of evaluation versus reference. <br>You may pause using the spacebar.</p>
-            <button id="ref-btn" type="button">SYNC RESET</button>
             <div id="slider-container" style="display: flex;"></div>
             <div id="slider-value" style="font-weight:bold;">Value: 50</div>
             <div id="continue-button"></div>
@@ -245,39 +178,30 @@
 
       on_load: () => {
         const evaluationVideo = document.getElementById('evaluationVideo');
-        const referenceVideo = document.getElementById('referenceVideo');
 
         evaluationVideo.currentTime = 0;
         evaluationVideo.loop = true;
-        
-        referenceVideo.currentTime = 0;
-        referenceVideo.loop = true;
-        
         evaluationVideo.play().catch(err => {
           console.log('Video play failed:', err);
-        });
-        referenceVideo.play().catch(err => {
-          console.log('Reference video play failed:', err);
         });
 
         let playing = true;
 
-        const btn = document.getElementById('ref-btn');
-        btn.style.width = '115px';
         const submitBtn = document.querySelector('.jspsych-btn');
       
         handleKey = (e) => {
-          if(e.code === 'Space') {
-            e.preventDefault();
-            if(playing) {
-              evaluationVideo.pause();
-              referenceVideo.pause();
-            } else {
-              evaluationVideo.play();
-              referenceVideo.play();
-            }
-            playing = !playing;
-          }
+          // Pause and play videos with spacebar
+          // if(e.code === 'Space') {
+          //   e.preventDefault();
+          //   if(playing) {
+          //     evaluationVideo.pause();
+          //     referenceVideo.pause();
+          //   } else {
+          //     evaluationVideo.play();
+          //     referenceVideo.play();
+          //   }
+          //   playing = !playing;
+          // }
 
           if (e.code === 'ArrowUp') {
             e.preventDefault();
@@ -316,7 +240,7 @@
         const continueContainer = document.querySelector('#continue-button');
         const valueDisplay = document.getElementById('slider-value');
         const sliderWrapper = slider.parentElement;
-        const panel = document.getElementById('ref-btn').parentElement;
+        const panel = document.getElementById('right-panel');
 
         const sliderRow = document.createElement('div');
         sliderRow.style.display = 'flex';
@@ -394,29 +318,13 @@
         sliderRow.appendChild(tickCol);
 
         continueContainer.append(document.querySelector('.jspsych-btn'));
-
-        let showingRef = false;
-        // let seenRef = false;
+        
         let sliderMoved = false;
-
         submitBtn.disabled = true;
 
         function updateSubmitState() {
           submitBtn.disabled = !sliderMoved;
         }
-
-        btn.style.whiteSpace = 'pre-line';
-        btn.addEventListener('click', () => {
-          btn.blur();
-          evaluationVideo.pause();
-          referenceVideo.pause();
-
-          referenceVideo.currentTime = 0;
-          evaluationVideo.currentTime = 0;
-
-          evaluationVideo.play();
-          referenceVideo.play();
-        });
 
         slider.addEventListener('input', () => {
           valueDisplay.textContent = `Value: ${slider.value}`;
@@ -448,202 +356,12 @@
     }
   }
 
-  // function createImageTrial(evaluation, reference) {
-  //   let handleKey;
-  //   return {
-  //     type: jsPsychHtmlSliderResponse,
-  //     stimulus: `
-  //       <div style="display: flex; align-items: center; justify-content: center;">
-  //         <div>
-  //           <img id="image" src="${evaluation}" style="max-width: 90vw; max-height: 83vh; width: auto; height: auto; object-fit: contain;" />
-  //         </div>
-  //         <div id="right-panel" style="margin-left: auto;">
-  //           <p>Please compare to reference image.</p>
-  //           <button id="ref-btn" type="button">Show Reference<br>[SPACE]</button>
-  //           <div id="slider-container" style="display: flex;"></div>
-  //           <div id="slider-value" style="font-weight:bold;">Value: 50</div>
-  //           <div id="continue-button"></div>
-  //         </div>
-  //       </div>
-  //     `,
-  //     // labels: ['0', '20', '40', '60', '80', '100'],
-  //     min: 0,
-  //     max: 100,
-  //     start: 50,
-  //     step: 1,
-  //     // slider_width: 20,
-  //     // require_movement: true,
-  //     button_label: 'Continue',
-
-  //     on_load: () => {
-  //       const img = document.getElementById('image');
-  //       const btn = document.getElementById('ref-btn');
-  //       btn.style.width = '115px';
-  //       const submitBtn = document.querySelector('.jspsych-btn');
-  //       handleKey = (e) => {
-  //         if(e.code === 'Space') {
-  //           e.preventDefault();
-  //           btn.click();
-  //         }
-  //       };
-
-  //       document.addEventListener('keydown', handleKey);
-
-  //       const slider = document.querySelector('input[type="range"]');
-  //       const sliderContainer = document.querySelector('#slider-container');
-  //       const continueContainer = document.querySelector('#continue-button');
-  //       const valueDisplay = document.getElementById('slider-value');
-  //       const sliderWrapper = slider.parentElement;
-  //       const panel = document.getElementById('ref-btn').parentElement;
-
-  //       const sliderRow = document.createElement('div');
-  //       sliderRow.style.display = 'flex';
-  //       sliderRow.style.alignItems = 'center';
-  //       sliderRow.style.gap = '6px';
-  //       sliderRow.style.justifyContent = 'center';
-
-  //       panel.insertBefore(sliderRow, sliderContainer);
-  //       sliderRow.appendChild(sliderContainer);
-
-  //       sliderContainer.style.width = '0px';
-  //       sliderContainer.style.height = '500px';
-  //       sliderContainer.style.position = 'relative';
-  //       sliderContainer.style.display = 'inline-block';
-  //       sliderContainer.style.overflow = 'visible';
-  //       sliderContainer.style.margin = '20px';
-  //       sliderContainer.style.padding = '0';
-
-  //       const rotor = document.createElement('div');
-  //       rotor.style.position = 'absolute';
-  //       rotor.style.left = '50%';
-  //       rotor.style.top = '50%';
-  //       rotor.style.transform = 'translate(-50%, -50%) rotate(-90deg)';
-  //       rotor.style.transformOrigin = 'center center';
-  //       rotor.style.width = '500px';
-  //       rotor.style.height = '30px';
-  //       rotor.style.display = 'flex';
-  //       rotor.style.alignItems = 'center';
-  //       rotor.style.justifyContent = 'center';
-
-  //       sliderWrapper.style.margin = '0';
-  //       sliderWrapper.style.padding = '0';
-  //       sliderWrapper.style.display = 'flex';
-  //       sliderWrapper.style.alignItems = 'center';
-  //       sliderWrapper.style.justifyContent = 'center';
-  //       rotor.appendChild(sliderWrapper);
-  //       sliderContainer.appendChild(rotor);
-
-  //       slider.style.width = '500px';
-  //       slider.style.height = '30px';
-  //       slider.style.margin = '0';
-  //       slider.style.padding = '0';
-  //       slider.style.display = 'block';
-  //       slider.style.transform = 'none';
-
-  //       const tickCol = document.createElement('div');
-  //       tickCol.style.display = 'flex';
-  //       tickCol.style.flexDirection = 'column';
-  //       tickCol.style.justifyContent = 'space-between';
-  //       tickCol.style.height = '500px';
-  //       tickCol.style.marginLeft = '0px';
-  //       tickCol.style.fontSize = '13px';
-  //       tickCol.style.lineHeight = '1.1';
-  //       tickCol.style.userSelect = 'none';
-  //       tickCol.style.webkitUserSelect = 'none';
-  //       tickCol.style.MozUserSelect = 'none';
-  //       tickCol.style.msUserSelect = 'none';  
-  //       tickCol.style.alignItems = 'flex-start';
-  //       tickCol.style.textAlign = 'left';
-
-  //       tickCol.style.pointerEvents = 'none';
-  //       tickCol.innerHTML = `
-  //         <span>100</span>
-  //         <span>&nbsp;&nbsp;Excellent</span>
-  //         <span>80</span>
-  //         <span>&nbsp;&nbsp;Good</span>
-  //         <span>60</span>
-  //         <span>&nbsp;&nbsp;Fair</span>
-  //         <span>40</span>
-  //         <span>&nbsp;&nbsp;Poor</span>
-  //         <span>20</span>
-  //         <span>&nbsp;&nbsp;Bad</span>
-  //         <span>0</span>
-  //       `;
-  //       sliderRow.appendChild(tickCol);
-
-  //       continueContainer.append(document.querySelector('.jspsych-btn'));
-
-  //       let showingRef = false;
-  //       let seenRef = false;
-  //       let sliderMoved = false;
-
-  //       submitBtn.disabled = true;
-
-  //       function updateSubmitState() {
-  //         submitBtn.disabled = !(sliderMoved && seenRef);
-  //       }
-
-  //       btn.style.whiteSpace = 'pre-line';
-  //       btn.addEventListener('click', () => {
-  //         showingRef = !showingRef;
-  //         seenRef = true;
-
-  //         if (showingRef) {
-  //           img.src = reference;
-  //           btn.textContent = 'Show Original\n[SPACE]';
-  //           // slider.disabled = true;
-  //           // valueDisplay.style.opacity = '0.5';
-  //         } else {
-  //           img.src = evaluation;
-  //           btn.textContent = 'Reference\n[SPACE]';
-  //           // slider.disabled = false;
-  //           // valueDisplay.style.opacity = '1.0';
-  //         }
-  //         updateSubmitState();
-  //       });
-
-  //       slider.addEventListener('input', () => {
-  //         valueDisplay.textContent = `Value: ${slider.value}`;
-  //         sliderMoved = true;
-  //         updateSubmitState();
-  //       });
-
-  //       let tickRow = document.createElement('div');
-  //       tickRow.style.display = 'flex';
-  //       tickRow.style.justifyContent = 'space-between';
-  //       tickRow.style.textAlign = 'center';
-  //       tickRow.style.width = '500px';
-  //       tickRow.style.fontSize = '14px';
-  //       tickRow.style.marginTop = '4px';
-  //       tickRow.style.flexDirection = 'column';
-  //       tickRow.innerHTML = `
-  //         <span style="flex:1; text-align:center;">Bad</span>
-  //         <span style="flex:1; text-align:center;">Poor</span>
-  //         <span style="flex:1; text-align:center;">Fair</span>
-  //         <span style="flex:1; text-align:center;">Good</span>
-  //         <span style="flex:1; text-align:center;">Excellent</span>
-  //       `;
-
-  //       // slider.before(tickRow);
-  //     },
-  //     on_finish: () => {
-  //         document.removeEventListener('keydown', handleKey);
-  //     }
-  //   }
-  // }
-
-  // const imageTrials = []
-  // for (const pair of jsPsych.randomization.shuffle(imagePairs)) {
-  //   imageTrials.push(createImageTrial(pair.evaluation, pair.reference));
-  // }
-
-  const videoTrials = []
-  for (const pair of jsPsych.randomization.shuffle(videoPairs)) {
-    videoTrials.push(createVideoTrial(pair.evaluation, pair.reference));
+  const videoTrials = [];
+  for (const video of jsPsych.randomization.shuffle(videos)) {
+    videoTrials.push(createVideoTrial(video));
   }
 
   timeline.unshift(preload);
-  // timeline.push(...imageTrials);
   timeline.push(...videoTrials);
   timeline.push({
     type: jsPsychSurveyHtmlForm,

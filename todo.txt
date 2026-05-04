@@ -1,10 +1,17 @@
 X Import new videos
-- Should be more obvious what video you are looking at
+X increase/decrease slider with keyboard inputs
+X enter --> continue
+X stitch videos
+
+X Should be more obvious what video you are looking at
+X completion bar color
+X remove PAUSE and SYNC button(s)
 - Fix sheet integration, again
+- rewrite welcome
+- first test trial
 - Save after each trial?
-- 2 duplicate trials
-- increase/decrease slider with keyboard inputs
-- enter --> continue
+- Upload on survey site
+
 
 ---OLD---
 high prio

@@ -7,9 +7,10 @@ X Should be more obvious what video you are looking at
 X completion bar color
 X remove PAUSE and SYNC button(s)
 X Fix sheet integration, again
-- rewrite welcome
-- first test trial
-- Save after each trial?
+X rewrite welcome
+X first test trial
+X Save after each trial
+- Fix size of video
 - Upload on survey site
 
 

@@ -10,7 +10,7 @@ X Fix sheet integration, again
 X rewrite welcome
 X first test trial
 X Save after each trial
-- Fix size of video
+? Fix size of video
 - Upload on survey site
 
 

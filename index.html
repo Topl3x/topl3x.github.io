@@ -56,6 +56,8 @@
           id: trialData.participant_id,
           trial: trialOrder[trialData.trial_index - (timeline.length - videos.length - 1)],
           response: trialData.response,
+          times_paused: trialData.times_paused,
+          time_elapsed: trialData.rt,
           type: 'video_trial'
         };
       }
@@ -170,8 +172,12 @@
 
   function createVideoTrial(evaluation) {
     let handleKey;
+    let timesPaused = 0;
+
     return {
       type: jsPsychHtmlSliderResponse,
+      data: { times_paused: 0
+      },
       stimulus: `
         <div style="display: flex; align-items: center; justify-content: center;">
           <div style="display: flex; gap: 12px; align-items: center; justify-content: center;">
@@ -196,6 +202,7 @@
        
           <div id="right-panel" style="margin-left: auto;">
             <p>Compare the avatars and score the quality using the slider.</p>
+            <button id="pause-btn">Pause Video</button>
             <div id="slider-container" style="display: flex;"></div>
             <div id="slider-value" style="font-weight:bold;">Value: 50</div>
             <div id="continue-button"></div>
@@ -211,8 +218,22 @@
       // require_movement: true,
       button_label: 'Continue',
 
-      on_load: () => {
+      on_load: () => { 
         const evaluationVideo = document.getElementById('evaluationVideo');
+        const pauseBtn = document.getElementById('pause-btn');
+        
+        function togglePlay() {
+          if(!evaluationVideo.paused) {
+            evaluationVideo.pause();
+            timesPaused++;
+            pauseBtn.textContent = "Play Video";
+          } else {
+            evaluationVideo.play().catch(err => {
+              console.error('Video play failed:', err);
+            });
+            pauseBtn.textContent = "Pause Video";
+          }
+        }
 
         evaluationVideo.currentTime = 0;
         evaluationVideo.loop = true;
@@ -220,23 +241,23 @@
           console.error('Video play failed:', err);
         });
 
-        let playing = true;
-
         const submitBtn = document.querySelector('.jspsych-btn');
-      
+        
+        evaluationVideo.addEventListener('click', () => {
+          togglePlay();
+        });
+
+        pauseBtn.addEventListener('click', () => {
+          pauseBtn.blur();
+          togglePlay();
+        });
+
         handleKey = (e) => {
           // Pause and play videos with spacebar
-          // if(e.code === 'Space') {
-          //   e.preventDefault();
-          //   if(playing) {
-          //     evaluationVideo.pause();
-          //     referenceVideo.pause();
-          //   } else {
-          //     evaluationVideo.play();
-          //     referenceVideo.play();
-          //   }
-          //   playing = !playing;
-          // }
+          if(e.code === 'Space') {
+            e.preventDefault();
+            togglePlay();
+          }
 
           if (e.code === 'ArrowUp') {
             e.preventDefault();
@@ -385,8 +406,9 @@
 
         // slider.before(tickRow);
       },
-      on_finish: () => {
+      on_finish: (data) => {
           document.removeEventListener('keydown', handleKey);
+          data.times_paused = timesPaused;
       }
     }
   }

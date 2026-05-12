@@ -47,6 +47,15 @@
         payload = {
           id: trialData.participant_id,
           response: trialData.response,
+          user_details: {
+            screen_width: trialData.screen_width,
+            screen_height: trialData.screen_height,
+            window_width: trialData.window_width,
+            window_height: trialData.window_height,
+            device_pixel_ratio: trialData.device_pixel_ratio,
+            user_agent: trialData.user_agent,
+            device: trialData.device
+          },
           type: 'demographics'
         };
       }
@@ -81,28 +90,42 @@
       });
     },
 
-    on_finish: function () {
+    on_finish: async function () {
       document.body.innerHTML = `
         <div style="max-width:700px;margin:40px auto;font-family:system-ui;text-align:center">
           <h2>Saving your responses…</h2>
           <p>Please don't close this tab.</p>
         </div>`;
-      const data = jsPsych.data.get().json();
+
+      const data = jsPsych.data.get();
       const payload = {
-        d: data,
-        type: 'raw_data'
+        id: participantID,
+        type: 'experiment_complete',
+        completed_at: Date.now(),
+        total_time_elapsed: data.last(1).values()[0]?.time_elapsed ?? null,
+        n_trials_completed: data.filter({ trial_type: 'html-slider-response' }).count(),
+        trial_order: trialOrder
       };
-      fetch(sheetURL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: {
-          'Content-Type': 'text/plain'
-        },
-        body: JSON.stringify(payload),
-        keepalive: true
-      }).finally(() => {
-        window.location.replace('thankyou.html');
-      });
+
+      try {
+        const res = await fetch(sheetURL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain' },
+          body: JSON.stringify(payload)
+        });
+
+        const result = await res.json();
+        
+        document.body.innerHTML = `
+          <div style="max-width:700px;margin:40px auto;font-family:system-ui;text-align:center">
+            <h2>Thank you for participating!</h2>
+            <p>The following code gives you Karma that can be used to get free research participants at SurveySwap.io.<br><br>
+              Go to: <a href="${result.url}">${result.url}</a><br><br>
+              Or, alternatively, enter the code manually:<br><strong>${result.code}</strong></p>
+          </div>`;
+      } catch (err) {
+        console.error(err);
+      }
     }
   });
 
@@ -202,7 +225,7 @@
        
           <div id="right-panel" style="margin-left: auto;">
             <p>Compare the avatars and score the quality using the slider.</p>
-            <button id="pause-btn">Pause Video</button>
+            <button id="pause-btn" type="button">Pause Video</button>
             <div id="slider-container" style="display: flex;"></div>
             <div id="slider-value" style="font-weight:bold;">Value: 50</div>
             <div id="continue-button"></div>
